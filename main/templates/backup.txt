@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Wee! Doo and Doo Things!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* Full black background */
+            color: #000000; /* Change text color to white for contrast */
+        }
+        h2, h3, h4 {
+            margin: 0 0 10px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .welcome-section {
+            background-color: #242630;
+            border-radius: 25px;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        .welcome-section h2 span {
+            color: cornflowerblue;
+        }
+        .product-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: cornsilk;
+            padding: 120px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .product-section img {
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+        .product-section img:hover {
+            transform: scale(1.05);
+        }
+        .product-info {
+            max-width: 600px;
+            margin-left: 30px;
+        }
+        .product-info h4 {
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        a {
+            color: cornflowerblue;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #1e90ff;
+        }
+        hr {
+            margin: 30px 0;
+            border: none;
+            height: 1px;
+            background-color: #ddd;
+        }
+        pre {
+            background-color: #f4f4f9;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h2 style="font-weight:bold; font-style:italic;">
+                Hello! Welcome to <span>Toko Wee!</span> We always doo everything!
+            </h2>
+            <h4>
+                Are you feeling <a href="https://www.youtube.com/watch?v=iUXtgXA18SE">lucky</a>???
+            </h4>
+        </div>
+
+        <!-- Product Section -->
+        <div class="product-section">
+            <img src="{% static 'assets/chet_baker_vinyl.jpg' %}" alt="Product 1" width="350" height="350">
+            <div class="product-info">
+                <h3>{{ itemName }}</h3>
+                <h4>Price: {{ itemPrice }}</h4>
+                <h4>Desc:</h4>
+                <pre>{{ itemDescription }}</pre>
+                <h4>Stock: {{ itemStock }}</h4>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
