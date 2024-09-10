@@ -1,10 +1,11 @@
 # TOKOWEE 🏪
 ## We always do and do things for you!
+---
 🔗🔗🔗Link to Toko Wee --> [Toko Wee](http://arzaka-raffan-tokowee.pbp.cs.ui.ac.id/)
-
+---
 Nama: Arzaka Raffan Mawardi\
 NPM: 2306152393\
-Kelas: PBP-D\
+Kelas: PBP-D
 
 ### Tugas 2 PBP 2024/2025
 ---
