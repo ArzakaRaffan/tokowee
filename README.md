@@ -7,4 +7,4 @@
 ### Pengimplementasian
 
 ### Membuat Sebuah Projek Django Baru
-- Pastikan Django sudah ter-install, lalu buat sebuah direktori lokal baru dengan nama yang sesuai dengan nama *E-Commerce* pilihan. Selanjutnya inisiasi projek baru Django dengan perintah `phahdakhba`
+- Pastikan Django sudah ter-install, lalu buat sebuah direktori lokal baru dengan nama yang sesuai dengan nama *E-Commerce* pilihan. Selanjutnya inisiasi projek baru Django dengan perintah 'phahdakhba'
