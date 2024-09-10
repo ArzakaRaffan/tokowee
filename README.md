@@ -1,15 +1,10 @@
 # TOKOWEE 🏪
 ## We always do and do things for you!
----
 🔗🔗🔗Link to Toko Wee --> [Toko Wee](http://arzaka-raffan-tokowee.pbp.cs.ui.ac.id/)
----
-Nama: Arzaka Raffan Mawardi\
-NPM: 2306152393\
-Kelas: PBP-D
 
-### Tugas 2 PBP 2024/2025
----
 
+## Tugas 2 PBP 2024/2025 📃
+---
 ### Pengimplementasian💡
 
 ### Membuat Sebuah Proyek Django Baru
@@ -43,3 +38,7 @@ Kelas: PBP-D
 
 ### Mengapa model pada Django disebut sebagai ORM?
 - Model pada Django disebut sebagai Object Relational Mapping (ORM) adalah karena Django memetakan model-model python ke dalam tabel-tabel dalam database. Hal ini dapat memudahkan developer untuk mengakses dan memanipulasi data sehingga mempercepat proses pengembangan perangkat lunak.
+
+Nama: Arzaka Raffan Mawardi\
+NPM: 2306152393\
+Kelas: PBP-D
