@@ -1,0 +1,56 @@
+{% extends 'base.html' %} 
+{% block content %}
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: antiquewhite;
+            font-family: 'Poppins', sans-serif;
+        }
+        .main-container{
+          padding: 20px;
+          background-color: #151515;
+          max-width: 1200px;
+          text-align: center;
+          border-radius: 25px;
+          margin-top: 20px;
+          margin-left: 50px;
+        }
+        .forms {
+          display: flex;
+          margin-left: 325px;
+        }
+        td {
+          padding-top: 10px;
+          padding-left: 20px;
+        }
+    </style>
+</head> 
+
+<body>
+    <div class="main-container">
+      <h3 style="text-align: center;">Add Your New Product</h3>
+      <hr>
+      <div class="forms">
+        <form method="POST">
+          {% csrf_token %}
+          <table>
+            {{ form.as_table }}
+            <tr>
+              <td></td>
+              <td>
+                <input type="submit" value="Add the product!" />
+              </td> 
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+    <h5 style="text-align: center; margin-top: 50px;">© Toko Wee | All rights Reserved.</h5>
+    <h5 style="text-align: center;">Nama: Arzaka Raffan Mawardi | NPM: 2306152393 | Kelas: PBP D</h5>
+</body>
+
+
+{% endblock %}
