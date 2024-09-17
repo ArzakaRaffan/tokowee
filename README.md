@@ -5,7 +5,7 @@
 
 ## Tugas 2 PBP 2024/2025 📃
 ---
-### Membuat Sebuah Proyek Django Baru
+### Membuat Sebuah Proyek Django Baru 🤖
 - Pastikan Django sudah ter-install, lalu buat sebuah direktori lokal baru dengan nama yang sesuai dengan nama E-Commerce pilihan. Selanjutnya, pada direktori tersebut aktifkan virtual environment dan inisiasi projek baru Django dengan perintah django-admin startproject [nama_proyek]
 
 ### Membuat aplikasi dengan nama main pada proyek tersebut.
@@ -26,17 +26,19 @@
 ### Melakukan deployment ke PWS terhadap aplikasi yang sudah dibuat
 - Lakukan deployment ke dalam Pacil Web Service (PWS) dengan membuat proyek baru dalam PWS lalu tambahkan ALLOWED_HOST dalam file settings.py dengan URL Deployment PWS dan melakukan push ke PWS sehingga URL dapat diakses secara publik
 
-### Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html
+### Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html 🏢
 ![baganPBP](https://github.com/user-attachments/assets/edf17d58-cdc7-42d2-a205-bb5dd7c60b77)
 
-### Jelaskan fungsi git dalam pengembangan perangkat lunak!
+### Jelaskan fungsi git dalam pengembangan perangkat lunak!💪
 - Git merupakan sebuah alat software development yang memiliki fungsi sebagai sistem kontrol versi (version control system). Git dapat melacak perubahan, menyimpan, dan mengelola berbagai source code. Karena keunggulannya, Git menjadi media pilihan utama developer dalam berkolaborasi dalam pengembangan perangkat lunak.
 
-### Mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
+### Mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak? ⛅
 - Framework Django seringkali dijadikan bahan pembelajaran pengembangan perangkat lunak karena beginner friendly, yakni mudah dipahami, dan juga mudah dipelajari. Struktur Model-View-Template (MVT) yang dipakai oleh Django menyajikan struktur yang terorganisir dan pemisahan yang jelas antar kepentingan sehingga banyak disukai oleh banyak orang. Dokumentasi yang lengkap serta komunitas yang aktif juga menjadi nilai plus bagi Django.
 
-### Mengapa model pada Django disebut sebagai ORM?
+### Mengapa model pada Django disebut sebagai ORM? 🥼
 - Model pada Django disebut sebagai Object Relational Mapping (ORM) adalah karena Django memetakan model-model python ke dalam tabel-tabel dalam database. Hal ini dapat memudahkan developer untuk mengakses dan memanipulasi data sehingga mempercepat proses pengembangan perangkat lunak.
+
+---
 
 Nama: Arzaka Raffan Mawardi\
 NPM: 2306152393\
