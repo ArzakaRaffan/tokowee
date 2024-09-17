@@ -2,6 +2,10 @@
 ## We always do and do things for you!
 🔗🔗🔗Link to Toko Wee --> [Toko Wee](http://arzaka-raffan-tokowee.pbp.cs.ui.ac.id/)
 
+---
+
+## Tugas 3 PBP 2024/2025 📖📖📖 
+
 ## Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 Dalam pengembangan sebuah platform, data delivery sangat diperlukan karena data delivery bertanggung jawab dalam pengiriman, penerimaan, dan pengelolaan data. Sistem data delivery ini juga merupakan sistem yang sangat efisien dan cepat dalam konteks pengelolaan data sehingga sangat diperlukan. Tanpa adanya sistem data delivery, pengguna tidak akan bisa merasakan pengelolaan data dalam platform yang aman, efisien, dan juga cepat.
 
