@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Register Page</title>
+{% endblock meta %}
+
+{% block content %}
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .login {
+    background-color: rgb(25, 25, 25);
+    padding: 30px;
+    margin: 0 auto;
+    border-radius: 15px;
+    max-width: 500px;
+    text-align: center;
+  }
+
+  .login h1 {
+    color: antiquewhite;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: antiquewhite;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+  .btn {
+    color: antiquewhite;
+    border-radius: 15px;
+    padding: 10px 20px;
+    background-color: rgb(35, 37, 37);
+    border: none;
+    margin-top: 20px;
+    margin-left: 200px;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+  }
+
+  .btn:hover {
+    transform: scale(1.03);
+  }
+
+  ul {
+    margin-top: 15px;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  ul li {
+    color: red;
+  }
+</style>
+
+<div class="login">
+  <h1>Register Here!</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="username">Username</label>
+      {{ form.username }}
+    </div>
+  
+    <div class="form-group">
+      <label for="password1">Password</label>
+      {{ form.password1 }}
+    </div>
+    
+    <div class="form-group">
+      <label for="password2">Confirm Password</label>
+      {{ form.password2 }}
+    </div>
+    
+    <div class="form-group">
+      <input class="btn" type="submit" name="submit" value="Register" />
+    </div>
+  </form>
+
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+
+{% endblock content %}
+

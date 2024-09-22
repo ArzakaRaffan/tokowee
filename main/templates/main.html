@@ -21,13 +21,40 @@
                 padding: 20px;
             }
             .welcome {
-                background-color: rgb(35, 37, 37);
-                border-radius: 25px;
+                display: flex;
+                background-color: rgb(25, 25, 25);
+                border-radius: 15px;
                 padding: 10px;
-                text-align: center;
-                margin-top: -38px;
-                max-width: 1050px;
-                margin-left: 75px;
+                margin-top: -15px;
+                max-width: 1500px;
+            }
+            .welcome img {
+                max-width: 250px;
+                margin-left: 20px;
+                margin-top: 25px;
+            }
+            .user {
+                margin-top: -10px;
+                flex-direction: column;
+            }
+            .user h3 {
+                text-align: right;
+                margin-top: 45px;
+                margin-left: 780px;
+            }
+            .user button{
+                color: antiquewhite;
+                border-radius: 15px;
+                padding: 10px 20px;
+                background-color: rgb(35, 37, 37);
+                border: none;
+                cursor: pointer;
+                transition: transform 0.5s ease;
+                margin-left: 865px;
+                font-weight: bold;
+            }
+            .user button:hover {
+                transform: scale(1.03);
             }
             .product-list {
                 margin-top: 65px;
@@ -98,15 +125,17 @@
         </style>
     </head>
     <body>
-        <div class="container">
-            <div class="welcome">
-                <h2 style="font-weight:bold; font-style: italic;">
-                    Hello! Welcome to <span style="color:rgb(233, 198, 152)">Toko Wee!</span>
-                </h2>
-                <h3 style="font-weight:bold; font-style: italic;">
-                    We do and do things!
-                </h3>
+        <div class="welcome">
+            <img src="https://i.imgur.com/oTUETWx.png" alt="TokoWee Logo">
+            <div class="user">
+                <h3>Welcome, {{ username }}!!!</h3>
+                <a href="{% url 'main:logout' %}">
+                    <button>Logout?</button>
+                </a>
             </div>
+        </div>
+        <div class="container">
+
             {% if not products %}
             <h3 style="text-align: center; margin-top: 75px;">No Products are available</h3>
             {% else %}
@@ -133,6 +162,11 @@
                 <button style="font-weight: bold;">Add a New Product</button>
             </div>
         </a>
+        {% if last_login %}
+            <h5 style="text-align: center;">Last Login Session: {{ last_login }}</h5>
+        {% else %}
+            <h5 style="text-align: center;">Last Login Session: No data available</h5>
+        {% endif %}
         <h5 style="text-align: center;">© Toko Wee | All rights Reserved.</h5>
         <h5 style="text-align: center;">Nama: Arzaka Raffan Mawardi | NPM: 2306152393 | Kelas: PBP D</h5>
     </body>
