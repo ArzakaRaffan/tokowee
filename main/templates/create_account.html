@@ -42,6 +42,7 @@
   .form-group input[type="text"],
   .form-group input[type="email"],
   .form-group input[type="password"] {
+    background: rgb(55, 65, 81);
     width: 100%;
     padding: 10px;
     border-radius: 5px;
@@ -56,7 +57,7 @@
     background-color: rgb(35, 37, 37);
     border: none;
     margin-top: 20px;
-    margin-left: 200px;
+    margin-left: 175px;
     cursor: pointer;
     transition: transform 0.5s ease;
   }
@@ -76,24 +77,23 @@
   }
 </style>
 
-<div class="login">
-  <h1>Register Here!</h1>
-
+<div style="margin-top: 50px;" class="login">
+  <img src="https://i.imgur.com/oTUETWx.png" class="mb-6 mx-auto">
   <form method="POST">
     {% csrf_token %}
     <div class="form-group">
       <label for="username">Username</label>
-      {{ form.username }}
+      <input type="text" name="username" id="username" placeholder="Username" required>
     </div>
   
     <div class="form-group">
       <label for="password1">Password</label>
-      {{ form.password1 }}
+      <input type="password" name="password1" id="password1" placeholder="Password" required>
     </div>
     
     <div class="form-group">
       <label for="password2">Confirm Password</label>
-      {{ form.password2 }}
+      <input type="password" name="password2" id="password2" placeholder="Confirm Password" required>
     </div>
     
     <div class="form-group">

@@ -28,17 +28,18 @@ def show_main(request):
 
 def create_product(request):
     form = ProductForm(request.POST or None)
-
+    context = {
+        'form': form,
+        'username': request.user.username 
+    }
     if form.is_valid() and request.method == 'POST':
         product_entry = form.save(commit=False)
         product_entry.user = request.user
         product_entry.save()
         return redirect('main:show_main')
     
-    context = {'form': form}
     return render(request, "create_product.html", context)
 
-# Showing data entries with XML, JSON, XML with ID, and JSON with ID 
 
 def show_xml(request):
     data = Product.objects.all()
@@ -89,3 +90,24 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_product(request, id):
+    product = Product.objects.get(pk=id)
+    form = ProductForm(request.POST or None, instance=product)
+
+    context = {
+        'form': form,
+        'username': request.user.username
+    }
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    return render(request, "edit_product.html", context)
+
+
+def delete_product(request, id):
+    product = Product.objects.get(pk = id)
+    product.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))

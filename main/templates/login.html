@@ -8,98 +8,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-        }
-        .login {
-            max-width: 400px;
-            margin: 100px auto;
-            background-color: rgb(25, 25, 25);
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-        }
-        .login h3 {
-            font-size: 36px;
-            font-weight: 600;
-        }
-        .login label {
-            font-size: 16px;
-            text-align: left;
-            display: block;
-            margin-bottom: 10px;
-        }
-        .login input[type="text"],
-        .login input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 10px;
-            border: none;
-            background-color: #333;
-            color: #fff;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        .login input[type="submit"] {
-            width: 100%;
-            background-color: rgb(35, 37, 37);
-            color: antiquewhite;
-            border-radius: 15px;
-            padding: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: transform 0.5s ease;
-        }
-        .login input[type="submit"]:hover {
-            transform: scale(1.03);
-        }
-        .login a {
-            color: antiquewhite;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .login a:hover {
-            text-decoration: underline;
-        }
-        .messages {
-            margin-top: 20px;
-            list-style: none;
-            padding-left: 0;
-        }
-        .messages li {
-            color: #ffcccb;
-        }
-    </style>
 </head>
-<body>
-    <div class="login">
-        <img src="https://i.imgur.com/oTUETWx.png">
+<body class="bg-black text-white font-sans">
+    <div style="margin-top: 50px;" class="max-w-md mx-auto mt-24 bg-[rgb(25,25,25)] p-10 rounded-lg text-center">
+        <img src="https://i.imgur.com/oTUETWx.png" class="mb-6 mx-auto">
+        
         <form method="POST" action="">
             {% csrf_token %}
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username" required />
+            <div class="mb-6 text-left">
+                <label for="username" class="block text-lg font-semibold mb-2">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required
+                    class="w-full p-3 rounded-md bg-gray-700 text-white border-none focus:ring-2 focus:ring-gray-500" />
+            </div>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required />
+            <div class="mb-6 text-left">
+                <label for="password" class="block text-lg font-semibold mb-2">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required
+                    class="w-full p-3 rounded-md bg-gray-700 text-white border-none focus:ring-2 focus:ring-gray-500" />
+            </div>
 
-            <input class="btn login_btn" type="submit" value="Login" />
+            <input class="w-full bg-gray-700 text-white rounded-lg py-3 font-bold cursor-pointer transition-transform transform hover:scale-105" type="submit" value="Login" />
         </form>
 
         {% if messages %}
-        <ul class="messages">
+        <ul class="mt-6 list-none">
             {% for message in messages %}
-            <li>{{ message }}</li>
+            <li class="text-red-400">{{ message }}</li>
             {% endfor %}
         </ul>
         {% endif %}
-        <p>Don't have an account yet?</p>
-        <a href="{% url 'main:register' %}">Register Now</a>
+        
+        <p class="mt-6">Don't have an account yet?</p>
+        <a href="{% url 'main:register' %}" class="text-white font-bold hover:underline">Register Here!</a>
     </div>
 </body>
 </html>
