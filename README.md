@@ -2,6 +2,128 @@
 ## We always do and do things for you!
 🔗🔗🔗Link to Toko Wee --> [Toko Wee](http://arzaka-raffan-tokowee.pbp.cs.ui.ac.id/)
 
+## Tugas 5 PBP 2024/2025
+
+## Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut:
+Jika suatu elemen HTML punya beberapa CSS Selector, urutan prioritasnya adalah:
+1. **Inline Styles**: Adalah CSS yang ditulis langsung di dalam file HTML dengan menggunakan `style`. Memiliki prioritas tertinggi
+2. **ID Selector**: Memiliki prioritas tertinggi di bawa Inline Styles dengan ciri khas penggunaan `#header`
+3. **Class, Attribute, dan Pseudo-class Selectors**: Biasanya ditandai dengan `.button`, `[type="text"]`, `:hover`, dll.
+4. **Element dan Pseudo-element Selectors**: Memiliki elemen terendah, contohnya `p` dan `::button`
+
+## Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+Semakin berkembangnya teknologi, website semakin banyak dapat diakses oleh berbagai perangkat. Hadirnya responsive design ini kemudian menjadi penting karena tujuan utamanya adalah untuk dapat memberikan pengalaman pengguna yang baik. Adanya responsive design ini menghindari pengguna dalam penyesuaian tampilan Website di berbagai perangkat yang mereka gunakan sehingga tidak diperlukan lagi zoom-in atau zoom-out yang berlebih hanya untuk dapat melihat sebuah website dengan baik. Desain yang responsif memastikan bahwa tampilan dan navigasi web tetap optimal, mudah digunakan sekaligus meningkatkan kenyamanan dan pengalaman pengguna secara keseluruhan. Contoh aplikasi yang sudah responsif adalah Github dan Google dimana kedua website tersebut sudah mendukung mobile dan desktop view dengan baik. Sementara contoh aplikasi yang belum menerapkan responsive design salah satunya adalah Quora yang belum dapat mendukung mobile view dengan baik.
+
+##  Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+- Margin adalah ruang kosong di luar border elemen yang mengatur jarak antara elemen
+- Border adalah sebuah garis yang mengelilingi dan menempel dengan lapisan terluar dari elemen
+- Padding adalah sebuah ruang yang memisahkan isi elemen dengan border. Padding mengatur jarak elemen dengan border
+
+Cara pengimplementasian
+```html
+.box{
+    margin-top: 10px; /* jarak bagian atas elemen */
+    border: 2px solid black; /* border warna hitam, tebal 2 pixels */
+    padding: 5px; /* menambah padding di keempat sisi */
+}
+```
+
+### Ilustrasi perbedaan margin, border, dan padding:
+
+![how-are-margins-borders-padding-and-content-related-01](https://github.com/user-attachments/assets/90f44244-c28c-459c-b247-b9f23be7ca84)
+
+## Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+Flexbox (Flexible Box Layout) adalah sebuah pengaturan dan penyusunan elemen dalam satu baris atau dalam satu kolom di dalam satu dimensi. Kegunaan flex box adalah untuk dapat mengatur tata letak barang secara horizontal maupun vertikal dan membuat sebuah layout dari elemen yang sangat fleksibel.\
+
+Grid layout adalah sebuah model tata letak dua dimensi yang digunakan untuk menyusun elemen dalam baris (row) dan kolom (column). Grid berguna ketika kita harus menyusun suatu elemen secara kompleks seperti contohnya pada pembuatan seluruh halaman website dengan tata letak yang besar.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+
+### Menambahkan fitur edit dan delete product
+Untuk dapat menambahkan fitur ini, dapat dibuat sebuah fungsi masing-masing untuk edit product dan juga delete product berdasarkan uuid product di `views.py`:
+```python
+def edit_product(request, id):
+    product = Product.objects.get(pk=id)
+    form = ProductForm(request.POST or None, instance=product)
+    context = {
+        'form': form,
+        'username': request.user.username
+    }
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    return render(request, "edit_product.html", context)
+
+def delete_product(request, id):
+    product = Product.objects.get(pk = id)
+    product.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
+```
+
+Karena edit product membutuhkan sebuah page baru, buat file html baru bernama `edit_product.html` dan implementasikan fitur edit di sana:
+```html
+<div class="bg-black">
+        <div style="margin-top: 150px;" class="main-container">
+            <h3>Edit Product</h3>
+            <hr>
+            <div class="forms">
+                <form method="POST">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_table }}
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Edit Product"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+``` 
+Fitur delete tidak memerlukan sebuah html file karena aksi langsung dilakukan saat itu juga dan tidak perlu redirect atau render html manapun. Selanjutnya buat routing ke fungsi tersebut di `urls.py`
+```python
+from main.views import edit_product, delete_product
+
+urlpatterns=[
+    ...
+    path('edit/<uuid:id>', edit_product, name='edit'),
+    path('delete/<uuid:id>', delete_product, name='delete'),
+    ...
+]
+```
+Jangan lupa untuk add dua buah hyperlink di `main.html` yang masing-masing menjalankan fungsi di `views.py` untuk dapat edit dan delete sebua product berdasarkan id-nya.
+
+### Kustomisasi halaman login, register, dan tambah product semenarik mungkin.
+- Login page
+![image](https://github.com/user-attachments/assets/33ad770a-ffbe-46a7-ad45-fcfe4a70c949)
+
+- Register page
+![image](https://github.com/user-attachments/assets/3be8c9d8-cf3e-4cd3-9301-4df415ae7395)
+
+- Add product page
+![image](https://github.com/user-attachments/assets/0cf2c979-1637-424f-b4ee-dd43aa018ecc)
+
+### Kustomisasi halaman daftar product menjadi lebih menarik dan responsive
+- Jika toko belum memiliki produk
+![image](https://github.com/user-attachments/assets/2b195588-2d2a-426c-aded-8d6067eb48e5)
+
+- Jika toko sudah memiliki produk, produk berupa card dan dapat di-edit serta di-delete
+![image](https://github.com/user-attachments/assets/2ab3b3dd-c224-4095-9834-728a3556d923)
+
+### Buat Navigation bar yang responsive
+- Navbar for desktop
+![image](https://github.com/user-attachments/assets/c8f7f440-dd13-4705-8259-6bd2c95cb9ee)
+
+- Navbar for mobile\
+![image](https://github.com/user-attachments/assets/70c541fd-1155-4f91-abd9-b5b2d5602c4d)
+
+
+# Archive Tugas 📚
+---
+
 ## Tugas 4 PBP 2024/2025
 
 ## Apa perbedaan antara `HttpResponseRedirect()` dan `redirect()`
@@ -48,7 +170,6 @@ urlpatterns = [
     path('register/', register, name='register'),
     ...
 ```
-
 ### Buat page untuk login User
 dalam `views.py` import terlebih dahulu fungsi `AuthenticationForm` agar dapat menyocokkan data yang di-input dengan yang ada di database dan juga fungsi `login` dari library Django. Lalu buat fungsi `login_user` untuk dapat menerima dan menyocokkan data:
 ```python
@@ -120,8 +241,7 @@ context = {
 
 setelah menambahkan cookies, jangan lupa untuk menghapus informasi last login ini ketika user logout, lalu selanjutnya tampilkan informasi ini pada `main.html`
 
-# Archive Tugas 📚
----
+
 
 ## Tugas 3 PBP 2024/2025 📖📖📖 
 
