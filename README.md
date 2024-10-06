@@ -14,7 +14,97 @@
 Fungsi dari penggunaan `await` dalam method `fetch()` adalah untuk menunggu sampai hasil di dalam method `fetch()` berhasil dilakukan, sehingga kita bisa mendapatkan hasil sebelum kode selanjutnya dijalankan atau dieksekusi oleh program. Jika tidak menjalankan `await` pada `fetch()`, maka fetch akan mengembalikan `promise` secara langsung, `promise` merupakan  objek yang merepresentasikan penyelesaian (resolve) atau kegagalan (reject) dari sebuah operasi asynchronous yang belum selesai. Sehingga hasil fetch belum dapat diperoleh.
 
 ## Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST
+decorator `csrf_exempt` digunakan untuk menonaktifkan perlindungan CSRF. Proteksi tersebut dinonaktifkan ketika kita berhadapan dengan AJAX POST yang diinisiasi dari eksternal. Saat menerima POST dari eksternal, Django tidak menerima CSRF yang valid sehingga ditolak dan POST tidak terlaksana. Maka dari itu, `csrf_exempt` ini diperlukan pada beberapa kasus tersebut sehingga pengiriman data dapat dilaksanakan secara baik dan tidak ada kendala.
 
+## Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+Masalah keamanan dari data adalah masalah utama dalam pertanyaan ini. Pembersihan data melalui frontend belum dapat dibilang cukup aman untuk sebuah website karena pengguna masih dapat memanipulasi atau mengubah kode frontend. Oleh karena itu, pembersihan data input di _backend_ juga diperlukan. _Backend_ akan selalu menganggap data yang diterima dari _frontend_ merupakan data yang tidak aman dan selalu akan melakukan pembersihan data kembali.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step!
+
+### Buat fungsi untuk menerima dan menambahkan data dari AJAX
+Untuk dapat menjalankan AJAX, hal pertama yang perlu dilakukan adalah dengan menambahkan sebuah fungsi `add_product_ajax` pada `views.py` agar dapat digunakan. Aktifkan decorator `@require_POST` dan `@csrf_exempt` untuk menunjang jalannya POST lewat AJAX.
+```python
+@csrf_exempt
+@require_POST
+def add_product_ajax(request):
+    itemName = strip_tags(request.POST.get("itemName"))
+    itemDescription = strip_tags(request.POST.get("itemDescription"))
+    itemPrice = strip_tags(request.POST.get("itemPrice"))
+    itemStock = strip_tags(request.POST.get("itemStock"))
+    itemImageURL = strip_tags(request.POST.get("itemImageURL"))
+    itemCategory = strip_tags(request.POST.get("itemCategory"))
+    user = request.user
+
+    new_product = Product(
+        itemName = itemName, itemDescription = itemDescription,
+        itemPrice = itemPrice, itemStock = itemStock,
+        itemImageURL = itemImageURL, itemCategory = itemCategory,
+        user = user
+    )
+
+    new_product.save()
+
+    return HttpResponse(b"CREATED", status=201)
+```
+Tambahkan juga method `strip_tags()` agar data yang dikirim "bersih" dari segala tags. Selanjutnya routing fungsi tersebut di `urls.py` agar dapat digunakan dan disambungkan.
+```python
+urlpatterns = [
+...
+    path('add-product-ajax', add_product_ajax, name='add_product_ajax')
+...
+]
+```
+
+### Tampilkan data pada `main.html`
+Buat sebuah script JS di dalam `main.html` untuk dapat memperoleh data dalam bentuk JSON dengan menggunakan method `fetch`. Lalu ganti `product_card.html` dengan
+```
+<div id="product_cards"></div>
+```
+Mulai sekarang, tampilan data akan diatur di dalam script JS yang memiliki id `product_cards`. Lalu buat method `refreshProductEntries` yang berguna untuk mengatur tampilan card saat produk kosong dan produk ada. Lalu panggil method tersebut di dalam script. 
+
+### Membuat modal input AJAX di `main.html`
+Pada `main.html`, buat sebuah modal AJAX agar user dapat input properti-properti dari product tanpa harus pindah halaman. Selanjutnya buat fungsi `hideModal()` dan `showModal()` untuk dapat memperlihatkan dan menyembunyikan modal saat tidak dipakai. Jangan lupa bind sebuah button yang sudah terhubung pada modal ke fungsi `hideModal()` dan `showModal()` agar dapat dipakai. Terakhir, buat sebuah button 'Add New Product with AJAX'
+
+### Menambahkan data AJAX melalui script
+Selanjutnya, buat sebuah fungsi dalam script untuk dapat menghubungkan modal dengan fungsi `add_product_ajax` di `views.py` dengan menggunakan method `fetch()`. Di dalamnya jangan lupa untuk memanggil fungsi `hideModal()` agar modal dapat tertutup setelah selesai menambahkan produk lewat AJAX.
+```python
+    function addProduct() {
+    fetch("{% url 'main:add_product_ajax' %}", {
+      method: "POST",
+      body: new FormData(document.querySelector('#productForm')),
+    })
+    .then(response => refreshProductEntries())
+
+    document.getElementById("productForm").reset(); 
+    hideModal();
+    
+    return false;
+    }
+```
+Terakhir, tambahkan event listener dari submit di Modal AJAX yang memiliki id 'productForm'. Buat agar dapat menjalankan fungsi `addProduct()` sehingga pengaplikasian AJAX dapat berjalan secara lancar.
+```python
+document.getElementById("productForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    addProduct();
+    })
+```
+Sebagai tambahan, untuk mengaplikasikan pembersihan data menggunakan `strip_tags()`, tambahkan fungsi-fungsi untuk mengembalikan data melalui `forms.py` secara "bersih"
+```python
+class ProductForm(ModelForm):
+    ...
+     def clean_itemName(self):
+        itemName = self.cleaned_data["itemName"]
+        return strip_tags(itemName)
+    
+    def clean_itemDescription(self):
+        itemDescription = self.cleaned_data["itemDescription"]
+        return strip_tags(itemDescription)
+    
+    def clean_itemPrice(self):
+        itemPrice = self.cleaned_data["itemPrice"]
+        return strip_tags(itemPrice)
+    ...
+```
 
 # Archive Tugas 📚
 ---
