@@ -13,6 +13,9 @@
 ## Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await
 Fungsi dari penggunaan `await` dalam method `fetch()` adalah untuk menunggu sampai hasil di dalam method `fetch()` berhasil dilakukan, sehingga kita bisa mendapatkan hasil sebelum kode selanjutnya dijalankan atau dieksekusi oleh program. Jika tidak menjalankan `await` pada `fetch()`, maka fetch akan mengembalikan `promise` secara langsung, `promise` merupakan  objek yang merepresentasikan penyelesaian (resolve) atau kegagalan (reject) dari sebuah operasi asynchronous yang belum selesai. Sehingga hasil fetch belum dapat diperoleh.
 
+## Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST
+
+
 # Archive Tugas 📚
 ---
 
