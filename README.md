@@ -2,6 +2,20 @@
 ## We always do and do things for you!
 🔗🔗🔗Link to Toko Wee --> [Toko Wee](http://arzaka-raffan-tokowee.pbp.cs.ui.ac.id/)
 
+## Tugas 6 PBP 2024/2025
+
+## Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+- Interaktif: JavaScript memungkinkan pembuatan elemen web yang interaktif seperti animasi, drop-down menu, pop-up, dan masih banyak fitur lainnya. Hal ini tentu dapat meningkatkan pengalaman pengguna secara keseluruhan
+- Cepat dan responsif: JavaScript berjalan pada sisi klien. Setiap permintaan tidak perlu diteruskan ke server sehingga performa dapat lebih ditingkatkan dan eksekusi dapat lebih cepat.
+- Kompatibilitas: JavaScript kompatibel dengan berbagai macam browser sehingga lebih fleksibel dipergunakan.
+- Simple Page Application: JavaScript memungkinkan sebuah page untuk dapat memperbarui isi dari konten web tanpa memerlukan refresh atau load ulang halaman.
+
+## Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await
+Fungsi dari penggunaan `await` dalam method `fetch()` adalah 
+
+# Archive Tugas 📚
+---
+
 ## Tugas 5 PBP 2024/2025
 
 ## Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut:
@@ -119,10 +133,6 @@ Jangan lupa untuk add dua buah hyperlink di `main.html` yang masing-masing menja
 
 - Navbar for mobile\
 ![image](https://github.com/user-attachments/assets/70c541fd-1155-4f91-abd9-b5b2d5602c4d)
-
-
-# Archive Tugas 📚
----
 
 ## Tugas 4 PBP 2024/2025
 
