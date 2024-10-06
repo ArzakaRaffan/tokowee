@@ -1,77 +1,23 @@
-<style>
-    .product {
-        background-color: rgb(209, 176, 134);
-        border-radius: 25px;
-        padding: 25px;
-        max-width: 1100px;
-        display: flex;
-    }
-    .product img {
-        margin-left: 20px;
-        border-radius: 15px;
-        width: 300px;
-        height: 300px;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
-    .product img:hover {
-        transform: scale(1.03);
-    }
-    .product-info {
-        margin-left: 50px;
-        flex: 1;
-        color: #000;
-        display: flex;
-        flex-direction: column; /* Stack items vertically */
-        justify-content: space-between; /* Space between elements */
-    }
-    .product-info h2 {
-        gap: 20px;
-        text-align: center;
-    }
-    .product-info h3 {
-        gap: 20px;
-        text-align: center;
-    }
-    .product-info h4 {
-        gap: 20px;
-        margin-top: 10px;
-    }
-    .button-group {
-        position: absolute;
-        margin-left: 475px;
-        margin-top: 275px;
-        display: flex;
-        gap: 20px;
-    }
-    .button-group img {
-        width: 30px; 
-        height: 30px;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-    .button-group img:hover {
-        transform: scale(1.05);
-    }
-</style>
-
-<div class="product">
-    <img src="{{ product.itemImageURL }}" alt="{{ product.itemName }}">
-    <div class="product-info">
-        <h2 style="font-weight: bold; font-size: larger; margin-bottom: 10px;">{{ product.itemName }}</h2>
-        <hr>
-        <h4 style="font-weight: 600; margin-top: 25px;">Price: ${{ product.itemPrice }}</h4>
-        <h4 style="font-weight: 600; margin-top: 15px;">Description:</h4>
-        <pre style="font-size: 85%; font-weight: 500; margin-left: 25px; margin-top: 7px;">{{ product.itemDescription }}</pre>
-        <h4 style="font-weight: 600">Stock: {{ product.itemStock }} items</h4>
-        <h4 style="font-weight: 600">Category: {{ product.itemCategory }}</h4>
-
-        <div class="button-group">
-            <a href="{% url 'main:edit' product.pk %}">
-                <img src="https://i.imgur.com/69uZ2rc.png" alt="Edit">
+<div class="w-full max-w-[1100px] bg-[rgb(209,176,134)] rounded-2xl p-8 mx-auto flex">
+    <img src="{{ product.itemImageURL }}" alt="{{ product.itemName }}" class="ml-5 rounded-xl w-72 h-72 object-cover transform transition-transform duration-500 hover:scale-105">
+    <div class="ml-12 flex-1 text-black flex flex-col justify-between">
+        <div class="text-center">
+            <h2 class="text-xl font-bold mb-3">{{ product.itemName }}</h2>
+            <hr class="my-4 border-gray-300">
+        </div>
+        <h4 style="margin-top: -15px;" class="font-semibold">Price: Rp {{ product.itemPrice }}</h4>
+        <h4 class="font-semibold mt-4">Description:</h4>
+        <pre class="text-sm font-medium mt-2 ml-4">{{ product.itemDescription }}</pre>
+        <div class="mt-6">
+            <h4 class="font-semibold">Stock: {{ product.itemStock }} items</h4>
+            <h4 class="font-semibold mt-2">Category: {{ product.itemCategory }}</h4>
+        </div>
+        <div style="position: absolute; align-self: flex-end; margin-top: 200px;">
+            <a style="margin-bottom: 20px;" href="{% url 'main:edit' product.pk %}" class="flex items-center justify-center w-10 h-10">
+                <img src="https://i.imgur.com/69uZ2rc.png" alt="Edit" class="w-8 h-8 transition-transform duration-300 hover:scale-110">
             </a>
-            <a href="{% url 'main:delete' product.pk %}">
-                <img src="https://i.imgur.com/3BzlOY0.png" alt="Delete">
+            <a href="{% url 'main:delete' product.pk %}" class="flex items-center justify-center w-10 h-10">
+                <img src="https://i.imgur.com/3BzlOY0.png" alt="Delete" class="w-8 h-8 transition-transform duration-300 hover:scale-110">
             </a>
         </div>
     </div>

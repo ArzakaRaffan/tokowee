@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block meta %}
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
 <title>TokoWee</title>
 {% endblock meta %}
 {% block content %}
@@ -8,26 +9,75 @@
 {% include 'navbar.html' %}
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        #crudModalContent {
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <div class="bg-black min-h-screen font-poppins overflow-hidden">
-    <div class="container mx-auto px-4 py-6 max-w-7xl">
-        {% if not products %}
-            <img style="max-width: 500px; max-height: 500px; margin-top: 75px; margin-left: 382px;" src="{% static 'image/noprod.png' %}" alt="Sad face">
-        {% else %}
-            <div class="product-list mt-36 flex flex-col gap-12 max-w-5xl mx-auto">
-                {% for product in products %}
-                    {% include 'product_card.html' %}
-                {% endfor %}
-            </div>
-        {% endif %}
+    <div class="container mx-auto px-4 py-6 max-w-7xl pt-32">
+        <div id="product_cards"></div>
     </div>
-    <a href="{% url 'main:create_product' %}">
-        <div class="add-product text-center mt-5">
+    <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+        <div id="crudModalContent" class="relative bg-[rgb(25,25,25)] rounded-lg shadow-lg w-4/5 sm:w-3/4 md:w-2/3 lg:w-2/5 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+            <div class="flex items-center justify-between p-4 border-b rounded-t">
+                <h3 class="text-xl font-semibold text-gray-900">
+                    Add New Product
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <div class="px-6 py-4 space-y-6 form-style">
+                <form id="productForm">
+                    <div class="mb-4">
+                        <label for="itemName" class="block text-sm font-medium text-white">Item Name</label>
+                        <input type="text" id="itemName" name="itemName" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Enter item name" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="itemDescription" class="block text-sm font-medium text-white">Item Description</label>
+                        <textarea id="itemDescription" name="itemDescription" rows="3" class="mt-1 block w-full h-52 resize-none border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Describe your item" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="itemPrice" class="block text-sm font-medium text-white">Item Price ($)</label>
+                        <input type="number" id="itemPrice" name="itemPrice" min="1" max="10000000000000000" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="itemStock" class="block text-sm font-medium text-white">Item Stock</label>
+                        <input type="number" id="itemStock" name="itemStock" min="1" max="10000000000000000" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="itemCategory" class="block text-sm font-medium text-white">Item Category</label>
+                        <textarea id="itemCategory" name="itemCategory" rows="3" class="mt-1 block w-full h-52 resize-none border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Product Category" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="itemImageURL" class="block text-sm font-medium text-white">Item IMG URL</label>
+                        <textarea id="itemImageURL" name="itemImageURL" rows="3" class="mt-1 block w-full h-52 resize-none border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Image URL" required>https://i.imgur.com/tGd7up6.jpeg</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+                <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+                <button type="submit" id="submitProduct" form="productForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="add-product text-center mt-5 pt-16 flex justify-center gap-4">
+        <a href="{% url 'main:create_product' %}">
             <button class="bg-[rgb(25,25,25)] text-amber-50 rounded-lg py-2 px-4 font-bold transition-transform duration-500 transform hover:scale-105">
                 Add a New Product
             </button>
-        </div>
-    </a>
+        </a>
+        <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="bg-[rgb(25,25,25)] text-amber-50 rounded-lg py-2 px-4 font-bold transition-transform duration-500 transform hover:scale-105" onclick="showModal();">
+            Add New Product by AJAX
+        </button>
+    </div>
     {% if last_login %}
     <h5 style="margin-top: 40px;" class="text-center text-white font-semibold mb-4">Last Login Session: {{ last_login }}</h5>
     {% else %}
@@ -37,4 +87,109 @@
     <h5 class="text-center text-white font-semibold mb-4">Nama: Arzaka Raffan Mawardi | NPM: 2306152393 | Kelas: PBP D</h5>
     <br>
 </div>
+<script>
+    async function getProductEntries(){
+        return fetch("{% url 'main:show_json' %}").then((res) => res.json())
+    }
+    async function refreshProductEntries() {
+        document.getElementById("product_cards").innerHTML = "";
+        document.getElementById("product_cards").className = "";
+        const productEntries = await getProductEntries();
+        let htmlString = "";
+        let classNameString = "";
+        if(productEntries.length === 0){
+            classNameString = ""
+            htmlString =`
+            <img style="max-width: 500px; max-height: 500px; margin-top: 75px; margin-left: 382px;" src="{% static 'image/noprod.png' %}" alt="Sad face">
+            `;
+        }else{
+            classNameString = "mt-6";
+            productEntries.forEach((item) => {
+                const name = DOMPurify.sanitize(item.fields.itemName);
+                const price = DOMPurify.sanitize(item.fields.itemPrice);
+                const description = DOMPurify.sanitize(item.fields.itemDescription);
+                const stock = DOMPurify.sanitize(item.fields.itemStock);
+                const category = DOMPurify.sanitize(item.fields.itemCategory);
+                const link = DOMPurify.sanitize(item.fields.itemImageURL);
+                htmlString += 
+            `
+                <div class="w-full max-w-[1100px] bg-[rgb(209,176,134)] rounded-2xl p-8 mx-auto flex mt-8">
+                    <img src="${link}" alt="${name}" class="ml-5 rounded-xl w-72 h-72 object-cover transform transition-transform duration-500 hover:scale-105">
+                    <div class="ml-12 flex-1 text-black flex flex-col justify-between">
+                        <div class="text-center">
+                            <h2 class="text-xl font-bold mb-3">${name}</h2>
+                            <hr class="my-4 border-gray-300">
+                        </div>
+                        <h4 style="margin-top: -15px;" class="font-semibold">Price: Rp ${price}</h4>
+                        <h4 class="font-semibold mt-4">Description:</h4>
+                        <pre class="text-sm font-medium mt-2 ml-4">${description}</pre>
+                        <div class="mt-6">
+                            <h4 class="font-semibold">Stock: ${stock} items</h4>
+                            <h4 class="font-semibold mt-2">Category: ${category}</h4>
+                        </div>
+                        <div style="position: absolute; align-self: flex-end; margin-top: 200px;">
+                            <a style="margin-bottom: 20px;" href="/edit/${item.pk}" class="flex items-center justify-center w-10 h-10">
+                                <img src="https://i.imgur.com/69uZ2rc.png" alt="Edit" class="w-8 h-8 transition-transform duration-300 hover:scale-110">
+                            </a>
+                            <a href="/delete/${item.pk}" class="flex items-center justify-center w-10 h-10">
+                                <img src="https://i.imgur.com/3BzlOY0.png" alt="Delete" class="w-8 h-8 transition-transform duration-300 hover:scale-110">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            });
+        }
+        document.getElementById("product_cards").className = classNameString;
+        document.getElementById("product_cards").innerHTML = htmlString;
+    }
+
+    refreshProductEntries();
+
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    function showModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+
+        modal.classList.remove('hidden'); 
+        setTimeout(() => {
+            modalContent.classList.remove('opacity-0', 'scale-95');
+            modalContent.classList.add('opacity-100', 'scale-100');
+        }, 50); 
+    }
+    function hideModal() {
+      const modal = document.getElementById('crudModal');
+      const modalContent = document.getElementById('crudModalContent');
+
+      modalContent.classList.remove('opacity-100', 'scale-100');
+      modalContent.classList.add('opacity-0', 'scale-95');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 150); 
+    }
+
+    document.getElementById("cancelButton").addEventListener("click", hideModal);
+    document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+
+    function addProduct() {
+    fetch("{% url 'main:add_product_ajax' %}", {
+      method: "POST",
+      body: new FormData(document.querySelector('#productForm')),
+    })
+    .then(response => refreshProductEntries())
+
+    document.getElementById("productForm").reset(); 
+    hideModal();
+    
+    return false;
+    }
+
+    document.getElementById("productForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    addProduct();
+    })
+</script>
 {% endblock content %}
